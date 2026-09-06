@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fantacalcio Manager</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Drago decorativo sullo sfondo, centrale, in controcolore -->
+<div class="bg-dragon" aria-hidden="true">
+  <svg viewBox="0 0 900 900" xmlns="http://www.w3.org/2000/svg">
+    <g class="dragon-float">
+      <!-- ala sinistra -->
+      <path class="dragon-wing dragon-wing-l" d="M420,330
+        C340,300 250,310 190,260
+        C230,300 240,340 220,380
+        C280,360 330,370 380,410
+        C390,380 400,355 420,330 Z"/>
+      <!-- ala destra -->
+      <path class="dragon-wing dragon-wing-r" d="M480,330
+        C560,300 650,310 710,260
+        C670,300 660,340 680,380
+        C620,360 570,370 520,410
+        C510,380 500,355 480,330 Z"/>
+      <!-- corpo sinuoso -->
+      <path class="dragon-body" d="M450,150
+        C500,190 470,230 500,270
+        C540,320 590,330 570,390
+        C550,450 480,460 500,520
+        C520,580 590,590 570,650
+        C555,695 500,710 460,740"
+        fill="none" />
+      <!-- coda -->
+      <path class="dragon-tail" d="M460,740 C440,760 420,770 395,790" fill="none"/>
+      <!-- testa -->
+      <path class="dragon-head" d="M450,150
+        C430,130 430,105 450,90
+        C475,75 505,85 515,105
+        C525,120 520,140 505,150
+        C525,150 545,165 545,180
+        C525,175 500,178 480,168
+        C465,175 448,170 450,150 Z"/>
+      <!-- corna -->
+      <path class="dragon-horn" d="M462,100 C455,80 458,60 470,45" fill="none"/>
+      <path class="dragon-horn" d="M498,98 C505,78 502,58 490,42" fill="none"/>
+      <!-- zampe -->
+      <path class="dragon-leg" d="M505,270 C530,285 545,275 560,285" fill="none"/>
+      <path class="dragon-leg" d="M495,460 C470,475 455,470 435,485" fill="none"/>
+    </g>
+  </svg>
+</div>
+
+<div class="app" id="app">
+  <div class="empty" style="padding:40px 4px">Caricamento...</div>
+</div>
+<div class="save-note" id="saveNote">Salvato</div>
+
+<!-- Firebase (versione da CDN, niente installazioni) -->
+<script type="module" src="app.js"></script>
+</body>
+</html>
