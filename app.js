@@ -57,7 +57,7 @@ function render(){
   app.innerHTML = `
     <header class="top">
       <h1>Fanta<span>calcio</span> Manager</h1>
-      <div class="sub">Lega Classic · gestione listone, asta, formazioni e voti</div>
+      <div class="sub">Lega Classic Âˇ gestione listone, asta, formazioni e voti</div>
     </header>
     <nav class="tabs" id="tabs"></nav>
     <div id="tabContent"></div>
@@ -68,7 +68,7 @@ function render(){
   ];
   const nav = document.getElementById('tabs');
   nav.innerHTML = tabs.map(([id,label])=>
-    `<button class="${activeTab===id?'active':''}" data-tab="${id}">${label}</button>`
+    <button class="${activeTab===id?'active':''}" data-tab="${id}">${label}</button>
   ).join('');
   nav.querySelectorAll('button').forEach(b=>b.onclick=()=>{ activeTab=b.dataset.tab; render(); });
 
@@ -91,7 +91,7 @@ function renderListone(){
     <div class="row">
       <div class="field"><label>Nome</label><input id="np-name" placeholder="Es. Lautaro"></div>
       <div class="field" style="max-width:120px"><label>Ruolo</label>
-        <select id="np-role">${ROLES.map(r=>`<option value="${r}">${r} - ${ROLE_NAMES[r]}</option>`).join('')}</select>
+        <select id="np-role">${ROLES.map(r=><option value="${r}">${r} - ${ROLE_NAMES[r]}</option>).join('')}</select>
       </div>
       <div class="field"><label>Squadra reale</label><input id="np-team" placeholder="Es. Inter"></div>
       <div class="field" style="max-width:110px"><label>Quotazione</label><input id="np-quot" type="number" min="0" placeholder="20"></div>
@@ -110,8 +110,8 @@ function renderListone(){
           <td>${p.name}</td>
           <td>${p.team||'-'}</td>
           <td class="num">${p.quot ?? '-'}</td>
-          <td>${assignedTo ? `<span class="tag">${squadraById(assignedTo)?.name||'assegnato'}</span>` : `<span class="tag">svincolato</span>`}</td>
-          <td><button class="icon-btn" data-del-player="${p.id}" title="Elimina">✕</button></td>
+          <td>${assignedTo ? <span class="tag">${squadraById(assignedTo)?.name||'assegnato'}</span> : <span class="tag">svincolato</span>}</td>
+          <td><button class="icon-btn" data-del-player="${p.id}" title="Elimina">â</button></td>
         </tr>`;
       }).join('')}
     </tbody></table>`}
@@ -131,7 +131,7 @@ function renderAsta(){
     </div>
   </div>
 
-  ${state.squadre.length===0 ? '<div class="card"><div class="empty">Crea almeno una fantasquadra per iniziare l\\'asta.</div></div>' :
+  ${state.squadre.length===0 ? '<div class="card"><div class="empty">Crea almeno una fantasquadra per iniziare l&#39;asta.</div></div>' :
   state.squadre.map(sq=>{
     const rosa = rosaOf(sq.id);
     const speso = rosa.reduce((s,r)=>s+r.prezzo,0);
@@ -142,17 +142,17 @@ function renderAsta(){
     <div class="card">
       <div class="row" style="justify-content:space-between;align-items:center">
         <h2 style="margin:0">${sq.name}</h2>
-        <button class="icon-btn" data-del-squadra="${sq.id}">✕ elimina squadra</button>
+        <button class="icon-btn" data-del-squadra="${sq.id}">â elimina squadra</button>
       </div>
-      <div class="hint">Budget ${sq.budget} · speso ${speso} · rimanente ${sq.budget-speso}
-        &nbsp;·&nbsp; P ${perRole.P} D ${perRole.D} C ${perRole.C} A ${perRole.A}</div>
+      <div class="hint">Budget ${sq.budget} Âˇ speso ${speso} Âˇ rimanente ${sq.budget-speso}
+        &nbsp;Âˇ&nbsp; P ${perRole.P} D ${perRole.D} C ${perRole.C} A ${perRole.A}</div>
       <div class="budget-bar"><div style="width:${pct}%"></div></div>
       <div class="row" style="margin-top:12px">
         <div class="field" style="flex:2">
           <label>Assegna giocatore svincolato</label>
           <select id="pick-player-${sq.id}">
             <option value="">-- scegli --</option>
-            ${freeAgents.map(p=>`<option value="${p.id}">${p.role} · ${p.name} (${p.team||'-'})</option>`).join('')}
+            ${freeAgents.map(p=><option value="${p.id}">${p.role} Âˇ ${p.name} (${p.team||'-'})</option>).join('')}
           </select>
         </div>
         <div class="field" style="max-width:100px"><label>Prezzo</label><input type="number" min="1" id="pick-price-${sq.id}" placeholder="1"></div>
@@ -164,7 +164,7 @@ function renderAsta(){
         const p = playerById(r.playerId); if(!p) return '';
         return `<tr><td><span class="role-badge role-${p.role}">${p.role}</span></td><td>${p.name}</td>
           <td class="num">${r.prezzo}</td>
-          <td><button class="icon-btn" data-remove-from-rosa="${sq.id}|${p.id}">✕</button></td></tr>`;
+          <td><button class="icon-btn" data-remove-from-rosa="${sq.id}|${p.id}">â</button></td></tr>`;
       }).join('')}</tbody></table>`}
     </div>`;
   }).join('')}
@@ -195,18 +195,18 @@ function renderFormazioni(){
     <div class="row" style="align-items:flex-end">
       <div class="field" style="max-width:100px"><label>Giornata</label><input type="number" min="1" id="gior-sel" value="${g}"></div>
       <div class="field" style="max-width:220px"><label>Fantasquadra</label>
-        <select id="form-squadra-sel">${state.squadre.map(s=>`<option value="${s.id}" ${s.id===sqId?'selected':''}>${s.name}</option>`).join('')}</select>
+        <select id="form-squadra-sel">${state.squadre.map(s=><option value="${s.id}" ${s.id===sqId?'selected':''}>${s.name}</option>).join('')}</select>
       </div>
       <div class="field" style="max-width:140px"><label>Modulo</label>
-        <select id="form-modulo-sel">${Object.keys(MODULI).map(m=>`<option value="${m}" ${m===conf.modulo?'selected':''}>${m}</option>`).join('')}</select>
+        <select id="form-modulo-sel">${Object.keys(MODULI).map(m=><option value="${m}" ${m===conf.modulo?'selected':''}>${m}</option>).join('')}</select>
       </div>
-      <span class="tag" style="margin-bottom:9px">${complete? '✓ formazione completa (1-'+need.D+'-'+need.C+'-'+need.A+')' : 'mancano giocatori: serve 1-'+need.D+'-'+need.C+'-'+need.A}</span>
+      <span class="tag" style="margin-bottom:9px">${complete? 'â formazione completa (1-'+need.D+'-'+need.C+'-'+need.A+')' : 'mancano giocatori: serve 1-'+need.D+'-'+need.C+'-'+need.A}</span>
     </div>
   </div>
 
   <div class="grid2">
     <div class="card">
-      <h2>Titolari — ${sq.name}</h2>
+      <h2>Titolari â ${sq.name}</h2>
       ${ROLES.map(r=>`
         <p class="hint" style="margin:10px 0 6px;color:var(--chalk)"><b>${ROLE_NAMES[r]}</b> (${countByRole[r]}/${r==='P'?1:need[r]})</p>
         ${rosaByRole[r].length===0 ? '<div class="empty">Nessuno in rosa</div>' : rosaByRole[r].map(p=>{
@@ -223,7 +223,7 @@ function renderFormazioni(){
       ${rosa.length===0 ? '<div class="empty">Rosa vuota.</div>' : rosa.map(r=>{
         const p = playerById(r.playerId); if(!p) return '';
         if(conf.titolari.includes(p.id)) return '';
-        return `<div style="padding:4px 0;font-size:0.88rem"><span class="role-badge role-${p.role}">${p.role}</span> ${p.name}</div>`;
+        return <div style="padding:4px 0;font-size:0.88rem"><span class="role-badge role-${p.role}">${p.role}</span> ${p.name}</div>;
       }).join('')}
     </div>
   </div>`;
@@ -246,7 +246,7 @@ function renderVoti(){
     </div>
   </div>
   <div class="card">
-    <h2>Voti — giornata ${g}</h2>
+    <h2>Voti â giornata ${g}</h2>
     ${list.length===0 ? '<div class="empty">Nessun titolare schierato per questa giornata. Vai su Formazioni prima.</div>' : `
     <table>
       <thead><tr><th>Nome</th><th>Voto</th><th>Gol</th><th>Assist</th><th>Amm.</th><th>Esp.</th><th>Autogol</th><th>Rig. sbagl.</th>
@@ -331,14 +331,14 @@ function renderConfronto(){
     <h2>Classifica fantalega</h2>
     ${state.squadre.length===0 ? '<div class="empty">Crea le fantasquadre per vedere la classifica.</div>' : `
     <table><thead><tr><th>#</th><th>Squadra</th><th>Giornate</th><th>Punti totali</th></tr></thead>
-    <tbody>${rowsClassifica.map((r,i)=>`<tr><td class="pos-rank">${i+1}</td><td>${r.sq.name}</td><td class="num">${r.giocate}</td><td class="num total-score">${r.totale.toFixed(1)}</td></tr>`).join('')}</tbody></table>`}
+    <tbody>${rowsClassifica.map((r,i)=><tr><td class="pos-rank">${i+1}</td><td>${r.sq.name}</td><td class="num">${r.giocate}</td><td class="num total-score">${r.totale.toFixed(1)}</td></tr>).join('')}</tbody></table>`}
   </div>
   <div class="card">
     <div class="row" style="justify-content:space-between;align-items:center">
       <h2 style="margin:0">Confronto giocatori</h2>
       <select id="confronto-role-sel" style="max-width:160px">
         <option value="ALL" ${uiState.confrontoRole==='ALL'?'selected':''}>Tutti i ruoli</option>
-        ${ROLES.map(r=>`<option value="${r}" ${uiState.confrontoRole===r?'selected':''}>${ROLE_NAMES[r]}</option>`).join('')}
+        ${ROLES.map(r=><option value="${r}" ${uiState.confrontoRole===r?'selected':''}>${ROLE_NAMES[r]}</option>).join('')}
       </select>
     </div>
     ${statRows.length===0 ? '<div class="empty">Inserisci voti nella scheda Voti giornata per vedere il confronto.</div>' : `
@@ -349,7 +349,7 @@ function renderConfronto(){
       <td class="num">${r.presenze}</td>
       <td class="num">${r.media.toFixed(2)}</td>
       <td class="num"><b>${r.fantamedia.toFixed(2)}</b></td>
-    </tr>`).join('')}</tbody></table>`}
+    </tr>).join('')}</tbody></table>}
   </div>`;
 }
 
@@ -395,8 +395,8 @@ function bindHandlers(){
     }));
     document.querySelectorAll('[data-assign-squadra]').forEach(b=>b.addEventListener('click', ()=>{
       const sid = b.dataset.assignSquadra;
-      const playerSel = $(`#pick-player-${sid}`);
-      const priceInp = $(`#pick-price-${sid}`);
+      const playerSel = $(#pick-player-${sid});
+      const priceInp = $(#pick-price-${sid});
       const pid = playerSel.value;
       const prezzo = parseFloat(priceInp.value);
       if(!pid || !prezzo || prezzo<=0) return;
